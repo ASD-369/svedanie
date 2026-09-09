@@ -1,0 +1,1028 @@
+/* ============================== */
+/* ОБЩИЕ СТИЛИ                     */
+/* ============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    background: #fef9f7;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ============================== */
+/* КОНТЕЙНЕР ДЛЯ СЕРДЕЧЕК         */
+/* ============================== */
+
+#hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.heart-particle {
+    position: absolute;
+    font-size: 30px;
+    pointer-events: none;
+    animation-fill-mode: forwards;
+}
+
+@keyframes floatHeart {
+    0% {
+        opacity: 1;
+        transform: translateY(100vh) rotate(0deg) scale(0.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10vh) rotate(720deg) scale(1.5);
+    }
+}
+
+@keyframes floatHeartFromPoint {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg) scale(0.3);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--offsetX), var(--offsetY)) rotate(720deg) scale(1.2);
+    }
+}
+
+/* ============================== */
+/* ШАГИ (ЭТАПЫ)                   */
+/* ============================== */
+
+.step {
+    display: none;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    animation: fadeIn 0.6s ease;
+}
+
+.step.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ============================== */
+/* ПРОГРЕСС-БАР                   */
+/* ============================== */
+
+.progress-bar {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+/* Контейнер для полоски */
+.progress-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 182, 193, 0.3);
+    border-radius: 10px;
+    position: relative;
+    overflow: visible;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b9d, #ff9a9e);
+    border-radius: 10px;
+    transition: width 0.8s ease;
+    position: relative;
+    box-shadow: 0 2px 15px rgba(255, 107, 157, 0.3);
+}
+
+/* Сердечко на конце полоски */
+.progress-heart {
+    position: absolute;
+    right: -18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 28px;
+    animation: pulseHeart 1.5s ease infinite;
+    filter: drop-shadow(0 0 10px rgba(255, 107, 157, 0.4));
+    z-index: 2;
+}
+
+/* Остаток полоски (розовый, куда ещё не дошло) */
+.progress-remain {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    background: rgba(255, 182, 193, 0.3);
+    border-radius: 10px;
+    transition: width 0.8s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes pulseHeart {
+    0%, 100% {
+        transform: translateY(-50%) scale(1);
+    }
+    50% {
+        transform: translateY(-50%) scale(1.3);
+    }
+}
+
+/* ============================== */
+/* ЭТАП 1: КОНВЕРТ                */
+/* ============================== */
+
+.envelope-container {
+    cursor: pointer;
+    perspective: 1000px;
+    animation: bounceEnvelope 2s ease infinite;
+}
+
+@keyframes bounceEnvelope {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+.envelope {
+    width: 280px;
+    height: 180px;
+    background: #ffb7c5;
+    border-radius: 15px;
+    position: relative;
+    box-shadow: 0 15px 50px rgba(255, 107, 157, 0.3);
+    transition: transform 0.6s ease;
+}
+
+.envelope:hover {
+    transform: scale(1.05);
+}
+
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: #ff9eb5;
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    border-radius: 15px 15px 0 0;
+    transition: transform 0.8s ease;
+    transform-origin: top;
+    z-index: 2;
+}
+
+.envelope.open .envelope-flap {
+    transform: rotateX(-180deg);
+}
+
+.envelope-body {
+     padding-top: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: #ffb7c5;
+    border-radius: 0 0 15px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.envelope-heart {
+    font-size: 40px;
+    animation: pulseHeart 1.5s ease infinite;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.envelope-text {
+    color: #fff;
+    font-size: 16px;
+    margin-top: 0;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.envelope-heart {
+    font-size: 40px;
+    animation: pulseHeart 1.5s ease infinite;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.envelope-text {
+    color: #fff;
+    font-size: 16px;
+    margin-top: 0;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.envelope-heart {
+    font-size: 40px;
+    animation: pulseHeart 1.5s ease infinite;
+    line-height: 1;
+}
+
+.envelope-text {
+    color: #fff;
+    font-size: 16px;
+    margin-top: 4px;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.envelope-heart {
+    font-size: 40px;
+    animation: pulseHeart 1.5s ease infinite;
+}
+
+.envelope-text {
+    color: #fff;
+    font-size: 16px;
+    margin-top: 8px;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+/* ============================== */
+/* КАРТОЧКИ НА ВСЕХ ЭТАПАХ       */
+/* ============================== */
+
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 30px;
+    padding: 40px 30px;
+    box-shadow: 0 20px 60px rgba(255, 107, 157, 0.15);
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ============================== */
+/* КАРТИНКИ ОДИНАКОВОГО РАЗМЕРА  */
+/* ============================== */
+
+.step-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.step-image img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: none;
+    box-shadow: 0 8px 30px rgba(255, 107, 157, 0.15);
+}
+
+/* ============================== */
+/* СЕРДЕЧКИ ПО БОКАМ (НА ВСЕХ ЭТАПАХ) */
+/* ============================== */
+
+.floating-hearts-left,
+.floating-hearts-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-size: 20px;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.floating-hearts-left {
+    left: -30px;
+    animation: floatLeft 3s ease-in-out infinite;
+}
+
+.floating-hearts-right {
+    right: -30px;
+    animation: floatRight 3s ease-in-out infinite;
+}
+
+.floating-hearts-left span,
+.floating-hearts-right span {
+    display: block;
+    animation: heartFloat 2s ease-in-out infinite;
+}
+
+.floating-hearts-left span:nth-child(2) { animation-delay: 0.5s; }
+.floating-hearts-left span:nth-child(3) { animation-delay: 1s; }
+.floating-hearts-left span:nth-child(4) { animation-delay: 1.5s; }
+.floating-hearts-left span:nth-child(5) { animation-delay: 0.8s; }
+
+.floating-hearts-right span:nth-child(2) { animation-delay: 0.3s; }
+.floating-hearts-right span:nth-child(3) { animation-delay: 0.7s; }
+.floating-hearts-right span:nth-child(4) { animation-delay: 1.2s; }
+.floating-hearts-right span:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes floatLeft {
+    0%, 100% {
+        transform: translateY(-50%) translateX(0);
+    }
+    50% {
+        transform: translateY(-50%) translateX(-10px);
+    }
+}
+
+@keyframes floatRight {
+    0%, 100% {
+        transform: translateY(-50%) translateX(0);
+    }
+    50% {
+        transform: translateY(-50%) translateX(10px);
+    }
+}
+
+@keyframes heartFloat {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-10px) scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* ============================== */
+/* ЭТАП 2: ОТКРЫТКА               */
+/* ============================== */
+
+.card-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.card-decorations {
+    margin-bottom: 20px;
+}
+
+.deco-star {
+    color: #ffb7c5;
+    font-size: 20px;
+    margin: 0 8px;
+    animation: twinkle 2s ease infinite;
+}
+
+.deco-star:nth-child(2) {
+    animation-delay: 0.5s;
+}
+.deco-star:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+.card-title {
+    font-size: 28px;
+    color: #4a2c3a;
+    margin-bottom: 30px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.card-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.btn {
+    padding: 14px 40px;
+    border: none;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-yes {
+    background: linear-gradient(135deg, #ff6b9d, #ff9a9e);
+    color: white;
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+}
+
+.btn-yes:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(255, 107, 157, 0.5);
+}
+
+.btn-yes:active {
+    transform: scale(0.95);
+}
+
+.btn-no {
+    background: #e8e0e0;
+    color: #7a6a6a;
+}
+
+.btn-no:hover {
+    background: #d5caca;
+    transform: translateY(-3px);
+}
+
+.card-subtitle {
+    color: #b8a0a0;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* ============================== */
+/* ЭТАП 3: ВСПЫШКА РАДОСТИ       */
+/* ============================== */
+
+.celebration-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    animation: celebrationPop 0.8s ease;
+}
+
+@keyframes celebrationPop {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.celebration-message {
+    font-size: 22px;
+    color: #4a2c3a;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.celebration-haha {
+    font-size: 18px;
+    color: #ff6b9d;
+    font-style: italic;
+    display: block;
+    margin-top: 5px;
+}
+
+.btn-celebrate {
+    background: linear-gradient(135deg, #ff6b9d, #ff9a9e);
+    color: white;
+    padding: 16px 50px;
+    font-size: 20px;
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+    animation: pulseBtn 1.5s ease infinite;
+}
+
+@keyframes pulseBtn {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.btn-celebrate:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 35px rgba(255, 107, 157, 0.6);
+}
+
+/* ============================== */
+/* ЭТАП 4: ДАТА И ВРЕМЯ          */
+/* ============================== */
+
+.datetime-card {
+    padding: 35px 25px;
+}
+
+.datetime-title {
+    font-size: 24px;
+    color: #4a2c3a;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.datetime-group {
+    margin-bottom: 25px;
+}
+
+.datetime-group label {
+    display: block;
+    color: #7a6a6a;
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.datetime-input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #f0d0d0;
+    border-radius: 15px;
+    font-size: 16px;
+    color: #4a2c3a;
+    background: #fef9f7;
+    transition: all 0.3s ease;
+}
+
+.datetime-input:focus {
+    border-color: #ff6b9d;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.1);
+}
+
+.btn-datetime {
+    width: 100%;
+    background: linear-gradient(135deg, #ff6b9d, #ff9a9e);
+    color: white;
+    padding: 16px;
+    font-size: 18px;
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
+    margin-top: 10px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-datetime:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 107, 157, 0.5);
+}
+
+.btn-datetime:active {
+    transform: scale(0.95);
+}
+
+/* ============================== */
+/* ЭТАП 5: ВЫБОР ЕДЫ             */
+/* ============================== */
+
+.food-card {
+    padding: 35px 25px;
+}
+
+.food-title {
+    font-size: 26px;
+    color: #4a2c3a;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.food-subtitle {
+    text-align: center;
+    color: #b8a0a0;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.food-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.food-item {
+    padding: 16px 12px;
+    background: #fef9f7;
+    border: 2px solid #f0d0d0;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    color: #4a2c3a;
+    text-align: center;
+    user-select: none;
+    font-weight: 500;
+    position: relative;
+}
+
+.food-item:hover {
+    border-color: #ffb7c5;
+    background: #fff5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 107, 157, 0.1);
+}
+
+.food-item:active {
+    transform: scale(0.95);
+}
+
+.food-item.selected {
+    border-color: #ff6b9d;
+    background: linear-gradient(135deg, #fff0f3, #ffe8ed);
+    box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.15), 0 4px 20px rgba(255, 107, 157, 0.15);
+    transform: translateY(-2px);
+}
+
+.food-item.selected::after {
+    content: ' ✓';
+    color: #ff6b9d;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.btn-food {
+    width: 100%;
+    background: linear-gradient(135deg, #ff6b9d, #ff9a9e);
+    color: white;
+    padding: 16px;
+    font-size: 18px;
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-food:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 107, 157, 0.5);
+}
+
+.btn-food:active {
+    transform: scale(0.95);
+}
+
+/* ============================== */
+/* ЭТАП 6: ФИНАЛ                  */
+/* ============================== */
+
+.final-card {
+    padding: 40px 25px;
+    text-align: center;
+    background: linear-gradient(135deg, #fff5f7, #fff0f3);
+}
+
+.final-decorations {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.final-heart {
+    font-size: 30px;
+    animation: floatFinalHeart 2s ease infinite;
+}
+
+.final-heart:nth-child(2) {
+    animation-delay: 0.5s;
+}
+.final-heart:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes floatFinalHeart {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-10px) scale(1.1);
+    }
+}
+
+.final-message {
+    font-size: 22px;
+    color: #4a2c3a;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.final-message strong {
+    color: #ff6b9d;
+}
+
+.final-food {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 15px 20px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    font-size: 18px;
+    color: #4a2c3a;
+}
+
+.final-food span {
+    color: #ff6b9d;
+    font-weight: 600;
+}
+
+.final-hearts-rain {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    font-size: 28px;
+    animation: rainHearts 2s ease infinite;
+}
+
+@keyframes rainHearts {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* ============================== */
+/* МОДАЛЬНЫЕ ОКНА                 */
+/* ============================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInModal 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+}
+
+@keyframes fadeInModal {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-content {
+    background: white;
+    border-radius: 30px;
+    max-width: 400px;
+    width: 90%;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #b8a0a0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    transform: rotate(90deg);
+    color: #4a2c3a;
+}
+
+.modal-body {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.modal-sad-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.modal-body h2 {
+    color: #4a2c3a;
+    margin-bottom: 10px;
+}
+
+.modal-body p {
+    color: #7a6a6a;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.btn-modal {
+    background: #e8e0e0;
+    color: #4a2c3a;
+    padding: 12px 40px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-modal:hover {
+    background: #d5caca;
+    transform: scale(1.05);
+}
+
+.modal-error-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+/* ============================== */
+/* АДАПТИВНОСТЬ                   */
+/* ============================== */
+
+@media (max-width: 600px) {
+    .envelope {
+        width: 220px;
+        height: 150px;
+    }
+    
+    .envelope-heart {
+        font-size: 30px;
+    }
+    
+    .envelope-text {
+        font-size: 14px;
+    }
+    
+    .card {
+        padding: 30px 20px;
+        border-radius: 25px;
+    }
+    
+    .card-title {
+        font-size: 22px;
+    }
+    
+    .btn {
+        padding: 12px 30px;
+        font-size: 16px;
+    }
+    
+    .celebration-message {
+        font-size: 18px;
+    }
+    
+    .food-options {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    
+    .food-item {
+        padding: 12px 10px;
+        font-size: 14px;
+    }
+    
+    .final-message {
+        font-size: 18px;
+    }
+    
+    .datetime-title {
+        font-size: 20px;
+    }
+    
+    .floating-hearts-left,
+    .floating-hearts-right {
+        font-size: 14px;
+        gap: 10px;
+    }
+    
+    .floating-hearts-left {
+        left: -15px;
+    }
+    
+    .floating-hearts-right {
+        right: -15px;
+    }
+    
+    .step-image img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 400px) {
+    .card-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .btn {
+        width: 100%;
+        padding: 14px;
+    }
+    
+    .food-options {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .floating-hearts-left,
+    .floating-hearts-right {
+        display: none;
+    }
+}
+
+/* ============================== */
+/* ДОПОЛНИТЕЛЬНЫЕ АНИМАЦИИ       */
+/* ============================== */
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.btn:hover::after {
+    opacity: 1;
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 107, 157, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(255, 107, 157, 0.4);
+    }
+}
+
+.active .card {
+    animation: glow 2s ease infinite;
+}
+
+/* Свечение для блесток */
+.heart-particle:has(✨, ⭐, 🌟, 💫) {
+    filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
+}
+

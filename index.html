@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Приглашение на свидание ❤️</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+    <!-- ============================== -->
+    <!-- ЭТАП 1: КОНВЕРТ                -->
+    <!-- ============================== -->
+    <div id="step-envelope" class="step active">
+        <div class="envelope-container" onclick="openEnvelope(event)">
+            <div class="envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-body">
+                    <div class="envelope-heart">❤️</div>
+                    <p class="envelope-text">Нажми на меня</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- ЭТАП 2: ОТКРЫТКА С ВОПРОСОМ    -->
+    <!-- ============================== -->
+    <div id="step-question" class="step">
+        <div class="progress-bar">
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill">
+                    <span class="progress-heart">❤️</span>
+                </div>
+                <div class="progress-remain" id="progressRemain"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="floating-hearts-left">
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+            </div>
+            <div class="floating-hearts-right">
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+            </div>
+            
+            <div class="card-content">
+                <div class="step-image">
+                    <img src="assets/images/step2.png" alt="Романтичная картинка" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect width=%22200%22 height=%22200%22 fill=%22%23ffb7c5%22/%3E%3Ctext x=%2240%22 y=%22110%22 font-size=%2260%22 fill=%22white%22 font-family=%22Arial%22%3E❤️%3C/text%3E%3C/svg%3E'">
+                </div>
+                
+                <div class="card-decorations">
+                    <span class="deco-star">✦</span>
+                    <span class="deco-star">✦</span>
+                    <span class="deco-star">✦</span>
+                </div>
+                
+                <h1 class="card-title">Вечер в выходные обещает быть волшебным ведь он будет только наш?<br></h1>
+                
+                <div class="card-buttons">
+                    <button class="btn btn-yes" onclick="answerYes(event)">Да 🥰</button>
+                    <button class="btn btn-no" onclick="answerNo(event)">Нет</button>
+                </div>
+                
+                <p class="card-subtitle">От Никиты с любовью ❤️</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- ЭТАП 3: ВСПЫШКА РАДОСТИ        -->
+    <!-- ============================== -->
+    <div id="step-celebration" class="step">
+        <div class="progress-bar">
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill1">
+                    <span class="progress-heart">❤️</span>
+                </div>
+                <div class="progress-remain" id="progressRemain1"></div>
+            </div>
+        </div>
+
+        <div class="card celebration-card">
+            <div class="floating-hearts-left">
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+            </div>
+            <div class="floating-hearts-right">
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+            </div>
+            
+            <div class="celebration-content">
+                <div class="step-image">
+                    <img src="assets/images/step3.jpg" alt="Романтичная картинка" id="celebrationImg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Ccircle cx=%22100%22 cy=%22100%22 r=%22100%22 fill=%22%23ffb7c5%22/%3E%3Ctext x=%2250%22 y=%22110%22 font-size=%2260%22 fill=%22white%22 font-family=%22Arial%22%3E❤️%3C/text%3E%3C/svg%3E'">
+                </div>
+                <div class="celebration-text">
+                    <p class="celebration-message">
+                        Погоди, ты<br>
+                        действительно<br>
+                        сказала да?<br>
+                        <span class="celebration-haha">Тыж моя сладенькая<br></span>
+                    </p>
+                    <button class="btn btn-celebrate" onclick="goToDateTime(event)">ДА ДА ДА ❤️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- ЭТАП 4: ВЫБОР ДАТЫ И ВРЕМЕНИ  -->
+    <!-- ============================== -->
+    <div id="step-datetime" class="step">
+        <div class="progress-bar">
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill2">
+                    <span class="progress-heart">❤️</span>
+                </div>
+                <div class="progress-remain" id="progressRemain2"></div>
+            </div>
+        </div>
+
+        <div class="card datetime-card">
+            <div class="floating-hearts-left">
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+            </div>
+            <div class="floating-hearts-right">
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+            </div>
+            
+            <div class="step-image">
+                <img src="assets/images/step4.jpg" alt="Календарь" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect width=%22200%22 height=%22200%22 fill=%22%23ffb7c5%22/%3E%3Ctext x=%2240%22 y=%22110%22 font-size=%2260%22 fill=%22white%22 font-family=%22Arial%22%3E📅%3C/text%3E%3C/svg%3E'">
+            </div>
+            
+            <h2 class="datetime-title">И так... когда ты свободна?</h2>
+            
+            <div class="datetime-group">
+                <label for="datePicker">Дата</label>
+                <input type="date" id="datePicker" class="datetime-input" min="2026-09-10" value="2026-09-15">
+            </div>
+            
+            <div class="datetime-group">
+                <label for="timePicker">Время</label>
+                <input type="time" id="timePicker" class="datetime-input" value="19:30">
+            </div>
+            
+            <button class="btn btn-datetime" onclick="saveDateTime(event)">
+                Выбрла дату ❤️
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- ЭТАП 5: ВЫБОР ЕДЫ              -->
+    <!-- ============================== -->
+    <div id="step-food" class="step">
+        <div class="progress-bar">
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill3">
+                    <span class="progress-heart">❤️</span>
+                </div>
+                <div class="progress-remain" id="progressRemain3"></div>
+            </div>
+        </div>
+
+        <div class="card food-card">
+            <div class="floating-hearts-left">
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+            </div>
+            <div class="floating-hearts-right">
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+            </div>
+            
+            <h2 class="food-title">🍕 Что ты хочешь?</h2>
+            <p class="food-subtitle">Выбери что тебе хочется (можно несколько)</p>
+            
+            <div class="food-options" id="foodOptions">
+                <div class="food-item" data-value="Пицца">🍕 Пицца</div>
+                <div class="food-item" data-value="Суши">🍣 Суши</div>
+                <div class="food-item" data-value="Бургер">🍔 Бургер</div>
+                <div class="food-item" data-value="Приготовим что-нибудь своё">🍳 Приготовим что-нибудь своё</div>
+                <div class="food-item" data-value="Вино">🍷 Вино</div>
+                <div class="food-item" data-value="Чай">🍵 Чай</div>
+                <div class="food-item" data-value="Кофе">☕ Кофе</div>
+            </div>
+            
+            <button class="btn btn-food" onclick="saveFood(event)">Готово 🥰</button>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- ЭТАП 6: ФИНАЛ                  -->
+    <!-- ============================== -->
+    <div id="step-final" class="step">
+        <div class="progress-bar">
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill4">
+                    <span class="progress-heart">❤️</span>
+                </div>
+                <div class="progress-remain" id="progressRemain4"></div>
+            </div>
+        </div>
+
+        <div class="card final-card">
+            <div class="floating-hearts-left">
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+            </div>
+            <div class="floating-hearts-right">
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+                <span>❤️</span>
+                <span>💕</span>
+            </div>
+            
+            <div class="final-decorations">
+                <span class="final-heart">❤️</span>
+                <span class="final-heart">💕</span>
+                <span class="final-heart">❤️</span>
+            </div>
+            
+            <div class="final-content">
+                <p class="final-message">
+                    Рад что не отказалась.<br>
+                    Буду готов к <strong id="finalDate">15.09.2026</strong> в <strong id="finalTime">19:30</strong>,<br>
+                    ❤️
+                </p>
+                <div class="final-food" id="finalFood">
+                    <p>🍕 Мы поедим: <span id="finalFoodList">Пицца</span></p>
+                </div>
+                <div class="final-hearts-rain">
+                    <span>❤️</span>
+                    <span>💕</span>
+                    <span>❤️</span>
+                    <span>💕</span>
+                    <span>❤️</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- МОДАЛЬНЫЕ ОКНА                 -->
+    <!-- ============================== -->
+    <div id="modal-sad" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div class="modal-body">
+                <div class="modal-sad-icon">😢</div>
+                <h2>Эх, ну ладно...</h2>
+                <p>Может быть, в следующий раз? 💔</p>
+                <button class="btn btn-modal" onclick="closeModal()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-error" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeErrorModal()">&times;</span>
+            <div class="modal-body">
+                <div class="modal-error-icon">⚠️</div>
+                <h2>Ой!</h2>
+                <p id="errorMessage">Что-то пошло не так. Попробуй ещё раз!</p>
+                <button class="btn btn-modal" onclick="closeErrorModal()">Понятно</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- КОНТЕЙНЕР ДЛЯ СЕРДЕЧЕК        -->
+    <!-- ============================== -->
+    <div id="hearts-container"></div>
+
+    <!-- ============================== -->
+    <!-- СКРИПТЫ                        -->
+    <!-- ============================== -->
+    <script src="scripts/hearts.js"></script>
+    <script src="scripts/notification.js"></script>
+    <script src="scripts/main.js"></script>
+
+</body>
+</html>
